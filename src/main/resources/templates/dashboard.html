@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Crime Record Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #111827;
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 21px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 22px;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        h1 {
+            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+        }
+
+        .card-title {
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .card-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .table-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+        }
+
+        .table-box h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+        }
+
+        .case-link {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .active-status {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .solved-status {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .investigation-status {
+            background: #fef3c7;
+            color: #d97706;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 Crime Record</h2>
+
+    <a href="/dashboard" class="active">🏠 Dashboard</a>
+    <a href="/add-crime">➕ Add Crime</a>
+    <a href="/crime-records">📋 Crime Records</a>
+    <a href="/suspects">👤 Suspects</a>
+    <a href="/add-suspect">➕ Add Suspect</a>
+    <a href="/investigation">🔍 Investigation</a>
+    <a href="/add-investigation">➕ Add Investigation</a>
+    <a href="/victim-witness">👥 Victim / Witness</a>
+    <a href="/add-victim-witness">➕ Add Victim / Witness</a>
+
+    <!-- CORRECT REPORT LINK -->
+    <a href="/reports">📊 Reports</a>
+
+    <a href="/logout">🚪 Logout</a>
+
+</div>
+
+<div class="main">
+
+    <h1>Dashboard</h1>
+
+    <p class="subtitle">
+        Crime Record Management System
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-title">Total Crimes</div>
+            <div class="card-number" th:text="${totalCrimes}">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Active Cases</div>
+            <div class="card-number" th:text="${activeCases}">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Solved Cases</div>
+            <div class="card-number" th:text="${solvedCases}">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Under Investigation</div>
+            <div class="card-number" th:text="${underInvestigation}">0</div>
+        </div>
+
+    </div>
+
+    <div class="table-box">
+
+        <h2>Recent Crime Records</h2>
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>Case ID</th>
+                <th>Crime Type</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Victim</th>
+                <th>Suspect</th>
+                <th>Officer</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="crime : ${crimes}">
+
+                <td>
+                    <a class="case-link"
+                       th:href="@{/case-details/{id}(id=${crime.caseId})}"
+                       th:text="${crime.caseId}">
+                        CR001
+                    </a>
+                </td>
+
+                <td th:text="${crime.crimeType}">Theft</td>
+                <td th:text="${crime.location}">Chennai</td>
+                <td th:text="${crime.crimeDate}">2026-01-01</td>
+                <td th:text="${crime.victimName}">Victim</td>
+                <td th:text="${crime.suspectName}">Suspect</td>
+                <td th:text="${crime.officerName}">Officer</td>
+
+                <td>
+
+                    <span class="status active-status"
+                          th:if="${crime.caseStatus == 'Active'}">
+                        Active
+                    </span>
+
+                    <span class="status solved-status"
+                          th:if="${crime.caseStatus == 'Solved'}">
+                        Solved
+                    </span>
+
+                    <span class="status investigation-status"
+                          th:if="${crime.caseStatus == 'Investigation'}">
+                        Investigation
+                    </span>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Investigation</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background: #111827;
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 22px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .add {
+            background: #2563eb;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        input {
+            padding: 11px;
+            width: 350px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 Crime Record</h2>
+
+    <a href="/dashboard">🏠 Dashboard</a>
+    <a href="/add-crime">➕ Add Crime</a>
+    <a href="/crime-records">📋 Crime Records</a>
+    <a href="/suspects">👤 Suspects</a>
+    <a href="/add-suspect">➕ Add Suspect</a>
+    <a href="/investigation" class="active">🔍 Investigation</a>
+    <a href="/add-investigation">➕ Add Investigation</a>
+    <a href="/victim-witness">👥 Victim / Witness</a>
+    <a href="/add-victim-witness">➕ Add Victim / Witness</a>
+    <a href="/reports">📊 Reports</a>
+    <a href="/logout">🚪 Logout</a>
+
+</div>
+
+<div class="main">
+
+    <div class="box">
+
+        <div class="top">
+
+            <h1>🔍 Investigation</h1>
+
+            <a href="/add-investigation"
+               class="add">
+                + Add Investigation
+            </a>
+
+        </div>
+
+        <input type="text"
+               id="search"
+               placeholder="Search investigation..."
+               onkeyup="searchTable()">
+
+        <table id="table">
+
+            <thead>
+
+            <tr>
+                <th>Investigation ID</th>
+                <th>Case ID</th>
+                <th>Officer</th>
+                <th>Date</th>
+                <th>Details</th>
+                <th>Evidence</th>
+                <th>Status</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="investigation : ${investigations}">
+
+                <td th:text="${investigation.investigationId}"></td>
+                <td th:text="${investigation.caseId}"></td>
+                <td th:text="${investigation.officerName}"></td>
+                <td th:text="${investigation.investigationDate}"></td>
+                <td th:text="${investigation.investigationDetails}"></td>
+                <td th:text="${investigation.evidence}"></td>
+                <td th:text="${investigation.status}"></td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+function searchTable() {
+
+    let value =
+        document.getElementById("search")
+        .value.toLowerCase();
+
+    document
+        .querySelectorAll("#table tbody tr")
+        .forEach(row => {
+
+            row.style.display =
+                row.innerText.toLowerCase()
+                    .includes(value)
+                    ? ""
+                    : "none";
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>

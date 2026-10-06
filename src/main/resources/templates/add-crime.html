@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Crime - Crime Record Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #111827;
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 13px 22px;
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .form-box {
+            max-width: 850px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+        }
+
+        textarea {
+            height: 110px;
+            resize: vertical;
+        }
+
+        button,
+        .back {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 7px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .back {
+            background: #6b7280;
+            color: white;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 Crime Record</h2>
+
+    <a href="/dashboard">🏠 Dashboard</a>
+    <a href="/add-crime" class="active">➕ Add Crime</a>
+    <a href="/crime-records">📋 Crime Records</a>
+    <a href="/suspects">👤 Suspects</a>
+    <a href="/add-suspect">➕ Add Suspect</a>
+    <a href="/investigation">🔍 Investigation</a>
+    <a href="/add-investigation">➕ Add Investigation</a>
+    <a href="/victim-witness">👥 Victim / Witness</a>
+    <a href="/add-victim-witness">➕ Add Victim / Witness</a>
+    <a href="/reports">📊 Reports</a>
+    <a href="/logout">🚪 Logout</a>
+
+</div>
+
+<div class="main">
+
+    <h1>➕ Add Crime</h1>
+
+    <div class="form-box">
+
+        <form action="/save-crime" method="post">
+
+            <div class="row">
+
+                <div class="group">
+                    <label>Case ID</label>
+                    <input type="text" name="caseId" required>
+                </div>
+
+                <div class="group">
+                    <label>Crime Type</label>
+                    <input type="text" name="crimeType" required>
+                </div>
+
+                <div class="group">
+                    <label>Crime Date</label>
+                    <input type="date" name="crimeDate" required>
+                </div>
+
+                <div class="group">
+                    <label>Location</label>
+                    <input type="text" name="location" required>
+                </div>
+
+                <div class="group">
+                    <label>Victim Name</label>
+                    <input type="text" name="victimName" required>
+                </div>
+
+                <div class="group">
+                    <label>Suspect Name</label>
+                    <input type="text" name="suspectName">
+                </div>
+
+                <div class="group">
+                    <label>Officer Name</label>
+                    <input type="text" name="officerName" required>
+                </div>
+
+                <div class="group">
+                    <label>Case Status</label>
+
+                    <select name="caseStatus" required>
+                        <option value="">Select Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Solved">Solved</option>
+                        <option value="Investigation">Investigation</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="group">
+
+                <label>Crime Description</label>
+
+                <textarea name="crimeDescription"></textarea>
+
+            </div>
+
+            <button type="submit">
+                Save Crime
+            </button>
+
+            <a href="/dashboard" class="back">
+                Back
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Victim / Witness - Crime Record Management System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 240px;
+            height: 100vh;
+
+            background: #111827;
+
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            color: white;
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+            font-size: 21px;
+        }
+
+        .sidebar a {
+            display: block;
+
+            color: #d1d5db;
+
+            text-decoration: none;
+
+            padding: 13px 22px;
+
+            font-size: 14px;
+        }
+
+        .sidebar a:hover {
+            background: #1f2937;
+
+            color: white;
+        }
+
+        .sidebar a.active {
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        /* MAIN */
+
+        .main {
+            margin-left: 240px;
+
+            padding: 35px;
+
+            min-height: 100vh;
+        }
+
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #111827;
+
+            font-size: 28px;
+        }
+
+        .add-btn {
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* SEARCH */
+
+        .search-box {
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 7px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+
+        /* TABLE */
+
+        .table-box {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #111827;
+
+            color: white;
+
+            padding: 13px;
+
+            text-align: left;
+
+            font-size: 13px;
+        }
+
+        td {
+            padding: 13px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            font-size: 13px;
+
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+
+        /* TYPE BADGES */
+
+        .badge {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .victim {
+            background: #fee2e2;
+
+            color: #dc2626;
+        }
+
+        .witness {
+            background: #dbeafe;
+
+            color: #2563eb;
+        }
+
+
+        /* STATUS */
+
+        .available {
+            background: #dcfce7;
+
+            color: #16a34a;
+        }
+
+        .pending {
+            background: #fef3c7;
+
+            color: #d97706;
+        }
+
+        .closed {
+            background: #e5e7eb;
+
+            color: #374151;
+        }
+
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #6b7280;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <h2>🔐 Crime Record</h2>
+
+
+    <a href="/dashboard">
+        🏠 Dashboard
+    </a>
+
+
+    <a href="/add-crime">
+        ➕ Add Crime
+    </a>
+
+
+    <a href="/crime-records">
+        📋 Crime Records
+    </a>
+
+
+    <a href="/suspects">
+        👤 Suspects
+    </a>
+
+
+    <a href="/add-suspect">
+        ➕ Add Suspect
+    </a>
+
+
+    <a href="/investigation">
+        🔍 Investigation
+    </a>
+
+
+    <a href="/add-investigation">
+        ➕ Add Investigation
+    </a>
+
+
+    <a href="/victim-witness"
+       class="active">
+        👥 Victim / Witness
+    </a>
+
+
+    <a href="/add-victim-witness">
+        ➕ Add Victim / Witness
+    </a>
+
+
+    <!-- IMPORTANT -->
+
+    <a href="/reports">
+        📊 Reports
+    </a>
+
+
+    <a href="/logout">
+        🚪 Logout
+    </a>
+
+</div>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            👥 Victim / Witness
+        </h1>
+
+
+        <a href="/add-victim-witness"
+           class="add-btn">
+
+            + Add Victim / Witness
+
+        </a>
+
+    </div>
+
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search by ID, name, case ID, type or status..."
+            onkeyup="searchTable()">
+
+    </div>
+
+
+
+    <!-- TABLE -->
+
+    <div class="table-box">
+
+        <table id="peopleTable">
+
+            <thead>
+
+            <tr>
+
+                <th>
+                    Person ID
+                </th>
+
+                <th>
+                    Name
+                </th>
+
+                <th>
+                    Case ID
+                </th>
+
+                <th>
+                    Type
+                </th>
+
+                <th>
+                    Contact
+                </th>
+
+                <th>
+                    Statement
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            <!-- DATABASE RECORDS -->
+
+            <tr th:each="person : ${people}">
+
+                <td th:text="${person.personId}">
+                    P001
+                </td>
+
+                <td th:text="${person.personName}">
+                    Sample Person
+                </td>
+
+                <td th:text="${person.caseId}">
+                    CR001
+                </td>
+
+                <td>
+
+                    <span
+                        class="badge victim"
+                        th:if="${person.type == 'Victim'}">
+
+                        Victim
+
+                    </span>
+
+
+                    <span
+                        class="badge witness"
+                        th:if="${person.type == 'Witness'}">
+
+                        Witness
+
+                    </span>
+
+                </td>
+
+                <td th:text="${person.contact}">
+                    9876543210
+                </td>
+
+                <td th:text="${person.statement}">
+                    Statement details
+                </td>
+
+                <td>
+
+                    <span
+                        class="badge available"
+                        th:if="${person.status == 'Available'}">
+
+                        Available
+
+                    </span>
+
+
+                    <span
+                        class="badge pending"
+                        th:if="${person.status == 'Pending'}">
+
+                        Pending
+
+                    </span>
+
+
+                    <span
+                        class="badge closed"
+                        th:if="${person.status == 'Closed'}">
+
+                        Closed
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+
+            <!-- EMPTY MESSAGE -->
+
+            <tr th:if="${#lists.isEmpty(people)}">
+
+                <td
+                    colspan="7"
+                    class="empty">
+
+                    No victim or witness records found.
+
+                </td>
+
+            </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= SEARCH SCRIPT ================= -->
+
+<script>
+
+function searchTable() {
+
+    let input =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
+
+
+    let rows =
+        document
+            .querySelectorAll(
+                "#peopleTable tbody tr"
+            );
+
+
+    rows.forEach(function(row) {
+
+        let text =
+            row.innerText.toLowerCase();
+
+
+        if (text.includes(input)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Victim / Witness</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background: #111827;
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 13px 22px;
+            color: #d1d5db;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .box {
+            background: white;
+            max-width: 850px;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button,
+        .back {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .back {
+            background: #6b7280;
+            color: white;
+            margin-left: 8px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 Crime Record</h2>
+
+    <a href="/dashboard">🏠 Dashboard</a>
+    <a href="/add-crime">➕ Add Crime</a>
+    <a href="/crime-records">📋 Crime Records</a>
+    <a href="/suspects">👤 Suspects</a>
+    <a href="/add-suspect">➕ Add Suspect</a>
+    <a href="/investigation">🔍 Investigation</a>
+    <a href="/add-investigation">➕ Add Investigation</a>
+    <a href="/victim-witness">👥 Victim / Witness</a>
+    <a href="/add-victim-witness" class="active">
+        ➕ Add Victim / Witness
+    </a>
+    <a href="/reports">📊 Reports</a>
+    <a href="/logout">🚪 Logout</a>
+
+</div>
+
+<div class="main">
+
+    <div class="box">
+
+        <h1>➕ Add Victim / Witness</h1>
+
+        <br>
+
+        <form action="/save-victim-witness"
+              method="post">
+
+            <div class="row">
+
+                <div class="group">
+
+                    <label>Person ID</label>
+
+                    <input type="text"
+                           name="personId"
+                           required>
+
+                </div>
+
+                <div class="group">
+
+                    <label>Person Name</label>
+
+                    <input type="text"
+                           name="personName"
+                           required>
+
+                </div>
+
+                <div class="group">
+
+                    <label>Case ID</label>
+
+                    <input type="text"
+                           name="caseId"
+                           required>
+
+                </div>
+
+                <div class="group">
+
+                    <label>Type</label>
+
+                    <select name="type">
+
+                        <option value="Victim">
+                            Victim
+                        </option>
+
+                        <option value="Witness">
+                            Witness
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="group">
+
+                    <label>Contact</label>
+
+                    <input type="text"
+                           name="contact">
+
+                </div>
+
+                <div class="group">
+
+                    <label>Status</label>
+
+                    <select name="status">
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Closed">
+                            Closed
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="group">
+
+                <label>Statement</label>
+
+                <textarea name="statement"></textarea>
+
+            </div>
+
+            <button type="submit">
+                Save
+            </button>
+
+            <a href="/victim-witness"
+               class="back">
+                Back
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
